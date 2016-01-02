@@ -9,17 +9,36 @@
 import UIKit
 
 class ViewController: UIViewController {
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+    @IBAction func simpleiOS7AlertButtonPressed(sender: AnyObject) {
+        let alertView = CGAlertView(alertViewManager: CGAlertViewManager())
+        alertView.showAlert("Title", message: "Message", cancelAction: CGAction(title: "Cancel") {
+            print("cancel called")
+            }, parentViewController: self)
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    @IBAction func simpleAlertButtonPressed(sender: AnyObject) {
+        let cancelAction = CGAction(title: "Cancel") {
+            print("cancel called")
+        }
+        CGAlertView().showAlert("Title", message: "Message", cancelAction: cancelAction, parentViewController: self)
     }
 
-
+    @IBAction func complexAlertButtonPressed(sender: AnyObject) {
+        let alertDetails = CGAlertDetails(
+            title: "Title",
+            message: "Message",
+            cancelAction: CGAction(title: "Cancel") {
+                print("cancel called")
+            },
+            otherActions: [
+                CGAction(title: "Action") {
+                    print("Action called")
+                },
+                CGAction(title: "Action1") {
+                    print("Action1 called")
+                }
+            ]
+        )
+        CGAlertView().showAlert(alertDetails, parentViewController: self)
+    }
 }
-

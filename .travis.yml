@@ -1,0 +1,7 @@
+language: objective-c
+
+osx_image: xcode7.2
+
+xcode_project: CGAlertView.xcodeproj # path to your xcodeproj folder
+xcode_scheme: CGAlertView
+xcode_sdk: iphonesimulator

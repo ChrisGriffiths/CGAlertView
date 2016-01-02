@@ -19,11 +19,10 @@ class CGAlertViewManagerTests: XCTestCase {
     }
 
     func test_createAlertView_returnsUIAlertView_withCorrectDetails() {
-        let alertView = sut.alertView!
+        let alertView = sut.createAlertView(CGAlertDetails.sampleAlertDetails)
         XCTAssertEqual(alertView.title, "Title")
         XCTAssertEqual(alertView.message, "Message")
         XCTAssertEqual(alertView.numberOfButtons, 3, "Expected 3, got \(alertView.numberOfButtons), should be 1 cancel and 2 actions")
-        XCTAssertEqual(sut.actions?.count, 3)
     }
 
     func test_createActions_returnDictionaryOfActions_whereButtonTitleIsKey() {

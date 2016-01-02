@@ -24,9 +24,11 @@ class CGAlertViewTests: XCTestCase {
         let sut = CGAlertView(alertViewManager: mockCGAlertViewManager)
 
         sut.showAlert("Title", message: "Message", cancelAction: CGAction(title: "CancelTitle", action: nil), parentViewController: parentViewController)
+
         XCTAssertEqual(mockCGAlertViewManager.alertDetails?.title, "Title")
         XCTAssertEqual(mockCGAlertViewManager.alertDetails?.message, "Message")
         XCTAssertNotNil(mockCGAlertViewManager.parentViewController)
+        XCTAssertTrue(CGAlertView.presentingAlertView! === sut)
     }
 
     class MockCGAlertViewManager: CGAlertViewManagerProtocol {

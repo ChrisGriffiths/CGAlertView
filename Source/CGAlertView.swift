@@ -46,8 +46,19 @@ public func ==(lhs: CGAction, rhs: CGAction) -> Bool {
     return lhs.title == rhs.title
 }
 
-public struct CGAlertView: CGAlertViewProtocol {
+public class CGAlertView: CGAlertViewProtocol {
+    //Used to keep reference alive while alertView showing. Otherwise actions fail
+    static internal var presentingAlertView: CGAlertView?
+
     let alertViewManager: CGAlertViewManagerProtocol
+
+    public convenience init() {
+        if #available(iOS 8.0, *) {
+            self.init(alertViewManager: CGAlertControlManager())
+        } else {
+            self.init(alertViewManager: CGAlertViewManager())
+        }
+    }
 
     internal init(alertViewManager: CGAlertViewManagerProtocol) {
         self.alertViewManager = alertViewManager
@@ -64,6 +75,7 @@ public struct CGAlertView: CGAlertViewProtocol {
     }
 
     public func showAlert(dialogDetails: CGAlertDetails, parentViewController: UIViewController) {
+        CGAlertView.presentingAlertView = self
         self.alertViewManager.showAlert(dialogDetails, parentViewController: parentViewController)
     }
 }
@@ -72,13 +84,11 @@ protocol CGAlertViewManagerProtocol {
     func showAlert(_: CGAlertDetails, parentViewController: UIViewController)
 }
 
-class CGAlertViewManager: NSObject, CGAlertViewManagerProtocol {
-    var alertView: UIAlertView?
-    var actions: Set<CGAction>?
-    weak var parentViewController: UIViewController?
+@objc public class CGAlertViewManager: NSObject, CGAlertViewManagerProtocol {
+    internal private(set) var alertView: UIAlertView?
+    public internal(set) var actions: Set<CGAction>?
 
-    func showAlert(alertDetails: CGAlertDetails, parentViewController: UIViewController) {
-        self.parentViewController = parentViewController
+    public func showAlert(alertDetails: CGAlertDetails, parentViewController: UIViewController) {
         actions = createActions(alertDetails)
         alertView = createAlertView(alertDetails)
         alertView?.show()
@@ -88,7 +98,7 @@ class CGAlertViewManager: NSObject, CGAlertViewManagerProtocol {
         let alert = UIAlertView(
             title: alertDetails.title,
             message: alertDetails.message,
-            delegate: nil,
+            delegate: self,
             cancelButtonTitle: alertDetails.cancelAction.title
         )
 
@@ -109,7 +119,7 @@ class CGAlertViewManager: NSObject, CGAlertViewManagerProtocol {
 }
 
 extension CGAlertViewManager: UIAlertViewDelegate {
-    func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {
+    public func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {
         guard let buttonTitle = alertView.buttonTitleAtIndex(buttonIndex),
             let actions = self.actions else { return }
         let buttonAction = actions.filter { $0.title == buttonTitle }
@@ -137,7 +147,6 @@ struct CGAlertControlManager: CGAlertViewManagerProtocol {
         return alert
     }
 
-    @available(iOS 8.0, *)
     func createButtonForAction(action: CGAction, _ style: UIAlertActionStyle) -> UIAlertAction {
         return UIAlertAction(title: action.title, style: style) {  alertAction in
             action.action?()

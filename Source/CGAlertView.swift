@@ -14,6 +14,18 @@ public protocol CGAlertViewProtocol {
     func showAlert(dialogDetails: CGAlertDetails, parentViewController: UIViewController)
 }
 
+extension CGAlertViewProtocol {
+    public func showAlert(title: String, message: String, cancelAction: CGAction, parentViewController: UIViewController) {
+        let alertDetails = CGAlertDetails(
+            title: title,
+            message: message,
+            cancelAction: cancelAction,
+            otherActions: nil
+        )
+        self.showAlert(alertDetails, parentViewController: parentViewController)
+    }
+}
+
 public struct CGAlertDetails {
     public let title: String
     public let message: String
@@ -62,16 +74,6 @@ public class CGAlertView: CGAlertViewProtocol {
 
     internal init(alertViewManager: CGAlertViewManagerProtocol) {
         self.alertViewManager = alertViewManager
-    }
-
-    public func showAlert(title: String, message: String, cancelAction: CGAction, parentViewController: UIViewController) {
-        let alertDetails = CGAlertDetails(
-            title: title,
-            message: message,
-            cancelAction: cancelAction,
-            otherActions: nil
-        )
-        self.showAlert(alertDetails, parentViewController: parentViewController)
     }
 
     public func showAlert(dialogDetails: CGAlertDetails, parentViewController: UIViewController) {

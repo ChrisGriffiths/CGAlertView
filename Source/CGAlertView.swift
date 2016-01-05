@@ -64,11 +64,11 @@ public class CGAlertView: CGAlertViewProtocol {
 
     let alertViewManager: CGAlertViewManagerProtocol
 
-    public convenience init() {
+    public init() {
         if #available(iOS 8.0, *) {
-            self.init(alertViewManager: CGAlertControlManager())
+            self.alertViewManager = CGAlertControlManager()
         } else {
-            self.init(alertViewManager: CGAlertViewManager())
+            self.alertViewManager = CGAlertViewManager()
         }
     }
 

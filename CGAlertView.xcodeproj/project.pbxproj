@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3006AD671C7C67BA009E2563 /* CGActionSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3006AD661C7C67BA009E2563 /* CGActionSheet.swift */; };
 		830685AF1C38135C0030247A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830685AE1C38135C0030247A /* AppDelegate.swift */; };
 		830685B11C38135C0030247A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 830685B01C38135C0030247A /* ViewController.swift */; };
 		830685B41C38135C0030247A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 830685B21C38135C0030247A /* Main.storyboard */; };
@@ -29,6 +30,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3006AD661C7C67BA009E2563 /* CGActionSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGActionSheet.swift; sourceTree = "<group>"; };
 		830685AB1C38135C0030247A /* CGAlertView.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CGAlertView.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		830685AE1C38135C0030247A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		830685B01C38135C0030247A /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -109,6 +111,7 @@
 			isa = PBXGroup;
 			children = (
 				830685CF1C3813F10030247A /* CGAlertView.swift */,
+				3006AD661C7C67BA009E2563 /* CGActionSheet.swift */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -217,6 +220,7 @@
 				830685D01C3813F10030247A /* CGAlertView.swift in Sources */,
 				830685B11C38135C0030247A /* ViewController.swift in Sources */,
 				830685AF1C38135C0030247A /* AppDelegate.swift in Sources */,
+				3006AD671C7C67BA009E2563 /* CGActionSheet.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -410,6 +414,7 @@
 				830685CA1C38135C0030247A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		830685CB1C38135C0030247A /* Build configuration list for PBXNativeTarget "CGAlertViewTests" */ = {
 			isa = XCConfigurationList;
@@ -418,6 +423,7 @@
 				830685CD1C38135C0030247A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

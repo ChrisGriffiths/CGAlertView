@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
@@ -17,75 +18,109 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="j4n-Mq-OtU">
-                                <rect key="frame" x="245" y="35" width="112" height="30"/>
-                                <state key="normal" title="Show iOS7 Alert"/>
-                                <connections>
-                                    <action selector="simpleiOS7AlertButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="swS-vb-Wmi"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="a90-CW-xSA">
-                                <rect key="frame" x="239" y="70" width="125" height="30"/>
-                                <state key="normal" title="Show Simple Alert"/>
-                                <connections>
-                                    <action selector="simpleAlertButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Zy4-S2-tts"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="A9w-8f-ZvR">
-                                <rect key="frame" x="231" y="105" width="139" height="30"/>
-                                <state key="normal" title="Show Complex Alert"/>
-                                <connections>
-                                    <action selector="complexAlertButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ALP-8v-KlU"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mZD-gi-rLz">
-                                <rect key="frame" x="222" y="173" width="158" height="30"/>
-                                <state key="normal" title="Show iOS Action Sheet"/>
-                                <connections>
-                                    <action selector="simpleiOS7ActionSheetButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Ili-4U-cj6"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KuQ-OP-OrA">
-                                <rect key="frame" x="211" y="222" width="180" height="30"/>
-                                <state key="normal" title="Show Simple Action Sheet"/>
-                                <connections>
-                                    <action selector="simpleActionSheetButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="YNg-Ty-CDh"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qck-rV-XIw">
-                                <rect key="frame" x="203" y="266" width="194" height="30"/>
-                                <state key="normal" title="Show Complex Action Sheet"/>
-                                <connections>
-                                    <action selector="complexActionSheetButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="2Qd-zw-LOA"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bL2-Mz-fFG">
-                                <rect key="frame" x="176" y="316" width="251" height="30"/>
-                                <state key="normal" title="Show Complex Action Sheet No Title"/>
-                                <connections>
-                                    <action selector="complexActionSheetNoTitleButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Ah3-8h-kan"/>
-                                </connections>
-                            </button>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bg7-hq-xvn">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KuQ-OP-OrA">
+                                        <rect key="frame" x="17" y="175" width="180" height="30"/>
+                                        <state key="normal" title="Show Simple Action Sheet"/>
+                                        <connections>
+                                            <action selector="simpleActionSheetButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="YNg-Ty-CDh"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bL2-Mz-fFG">
+                                        <rect key="frame" x="17" y="251" width="251" height="30"/>
+                                        <state key="normal" title="Show Complex Action Sheet No Title"/>
+                                        <connections>
+                                            <action selector="complexActionSheetNoTitleButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Ah3-8h-kan"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="A9w-8f-ZvR">
+                                        <rect key="frame" x="17" y="99" width="139" height="30"/>
+                                        <state key="normal" title="Show Complex Alert"/>
+                                        <connections>
+                                            <action selector="complexAlertButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ALP-8v-KlU"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qck-rV-XIw">
+                                        <rect key="frame" x="17" y="213" width="194" height="30"/>
+                                        <state key="normal" title="Show Complex Action Sheet"/>
+                                        <connections>
+                                            <action selector="complexActionSheetButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="2Qd-zw-LOA"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="j4n-Mq-OtU">
+                                        <rect key="frame" x="17" y="23" width="112" height="30"/>
+                                        <state key="normal" title="Show iOS7 Alert"/>
+                                        <connections>
+                                            <action selector="simpleiOS7AlertButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="swS-vb-Wmi"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mZD-gi-rLz">
+                                        <rect key="frame" x="17" y="137" width="158" height="30"/>
+                                        <state key="normal" title="Show iOS Action Sheet"/>
+                                        <connections>
+                                            <action selector="simpleiOS7ActionSheetButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Ili-4U-cj6"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qKf-YK-OfV">
+                                        <rect key="frame" x="17" y="289" width="317" height="30"/>
+                                        <state key="normal" title="Show Coloured Complex Action Sheet No Title"/>
+                                        <connections>
+                                            <action selector="complexColoredActionSheetNoTitleButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="bgj-Oa-k3x"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="a90-CW-xSA">
+                                        <rect key="frame" x="17" y="61" width="125" height="30"/>
+                                        <state key="normal" title="Show Simple Alert"/>
+                                        <connections>
+                                            <action selector="simpleAlertButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Zy4-S2-tts"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uA7-mU-6y5">
+                                        <rect key="frame" x="17" y="332" width="354" height="30"/>
+                                        <state key="normal" title="Show Coloured Complex Action Sheet No Title iOS7"/>
+                                        <connections>
+                                            <action selector="complexColorediOS7ActionSheetNoTitleButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="YhV-L6-tRW"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="bL2-Mz-fFG" firstAttribute="top" secondItem="Qck-rV-XIw" secondAttribute="bottom" constant="8" id="G4A-4H-X78"/>
+                                    <constraint firstAttribute="bottom" secondItem="uA7-mU-6y5" secondAttribute="bottom" constant="10" id="G76-Bc-7fR"/>
+                                    <constraint firstItem="a90-CW-xSA" firstAttribute="leading" secondItem="j4n-Mq-OtU" secondAttribute="leading" id="Hp9-IA-VdU"/>
+                                    <constraint firstItem="uA7-mU-6y5" firstAttribute="top" secondItem="qKf-YK-OfV" secondAttribute="bottom" constant="13" id="NFY-Sa-VuV"/>
+                                    <constraint firstItem="mZD-gi-rLz" firstAttribute="top" secondItem="A9w-8f-ZvR" secondAttribute="bottom" constant="8" id="TAL-Fn-MM5"/>
+                                    <constraint firstAttribute="trailing" secondItem="uA7-mU-6y5" secondAttribute="trailing" constant="10" id="a5b-Bs-O92"/>
+                                    <constraint firstItem="qKf-YK-OfV" firstAttribute="leading" secondItem="bL2-Mz-fFG" secondAttribute="leading" id="aF2-H6-8sy"/>
+                                    <constraint firstItem="A9w-8f-ZvR" firstAttribute="top" secondItem="a90-CW-xSA" secondAttribute="bottom" constant="8" id="bqY-PU-Duj"/>
+                                    <constraint firstItem="bL2-Mz-fFG" firstAttribute="leading" secondItem="Qck-rV-XIw" secondAttribute="leading" id="cYX-wr-eqD"/>
+                                    <constraint firstItem="KuQ-OP-OrA" firstAttribute="leading" secondItem="mZD-gi-rLz" secondAttribute="leading" id="eVR-c6-Ywj"/>
+                                    <constraint firstItem="KuQ-OP-OrA" firstAttribute="top" secondItem="mZD-gi-rLz" secondAttribute="bottom" constant="8" id="h6c-Ts-Ggk"/>
+                                    <constraint firstItem="A9w-8f-ZvR" firstAttribute="leading" secondItem="a90-CW-xSA" secondAttribute="leading" id="pDw-rs-wjV"/>
+                                    <constraint firstItem="j4n-Mq-OtU" firstAttribute="top" secondItem="bg7-hq-xvn" secondAttribute="top" constant="23" id="r5I-c6-8Ld"/>
+                                    <constraint firstItem="Qck-rV-XIw" firstAttribute="top" secondItem="KuQ-OP-OrA" secondAttribute="bottom" constant="8" id="tRe-mb-V3a"/>
+                                    <constraint firstItem="j4n-Mq-OtU" firstAttribute="leading" secondItem="bg7-hq-xvn" secondAttribute="leading" constant="17" id="tae-SY-2rv"/>
+                                    <constraint firstItem="qKf-YK-OfV" firstAttribute="top" secondItem="bL2-Mz-fFG" secondAttribute="bottom" constant="8" id="u9C-rl-fwN"/>
+                                    <constraint firstItem="mZD-gi-rLz" firstAttribute="leading" secondItem="A9w-8f-ZvR" secondAttribute="leading" id="uZD-bQ-Jsu"/>
+                                    <constraint firstItem="Qck-rV-XIw" firstAttribute="leading" secondItem="KuQ-OP-OrA" secondAttribute="leading" id="w5y-Ys-pfI"/>
+                                    <constraint firstItem="uA7-mU-6y5" firstAttribute="leading" secondItem="qKf-YK-OfV" secondAttribute="leading" id="wTa-Gg-oFi"/>
+                                    <constraint firstItem="a90-CW-xSA" firstAttribute="top" secondItem="j4n-Mq-OtU" secondAttribute="bottom" constant="8" id="xgk-mN-Ld0"/>
+                                </constraints>
+                            </scrollView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="Qck-rV-XIw" firstAttribute="top" secondItem="KuQ-OP-OrA" secondAttribute="bottom" constant="14" id="1Mj-4F-kIa"/>
-                            <constraint firstItem="A9w-8f-ZvR" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="1dJ-ua-dA0"/>
-                            <constraint firstItem="mZD-gi-rLz" firstAttribute="top" secondItem="A9w-8f-ZvR" secondAttribute="bottom" constant="38" id="1w6-o7-89M"/>
-                            <constraint firstItem="j4n-Mq-OtU" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="99h-cT-fjD"/>
-                            <constraint firstItem="KuQ-OP-OrA" firstAttribute="top" secondItem="mZD-gi-rLz" secondAttribute="bottom" constant="19" id="Q02-Tn-yXJ"/>
-                            <constraint firstItem="a90-CW-xSA" firstAttribute="top" secondItem="j4n-Mq-OtU" secondAttribute="bottom" constant="5" id="TPR-M2-fVA"/>
-                            <constraint firstItem="mZD-gi-rLz" firstAttribute="centerX" secondItem="A9w-8f-ZvR" secondAttribute="centerX" id="dHc-NK-nfF"/>
-                            <constraint firstItem="Qck-rV-XIw" firstAttribute="centerX" secondItem="A9w-8f-ZvR" secondAttribute="centerX" id="enO-q6-Fk4"/>
-                            <constraint firstItem="A9w-8f-ZvR" firstAttribute="top" secondItem="a90-CW-xSA" secondAttribute="bottom" constant="5" id="iat-d4-RZn"/>
-                            <constraint firstItem="j4n-Mq-OtU" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="15" id="s7S-hL-IRV"/>
-                            <constraint firstItem="KuQ-OP-OrA" firstAttribute="centerX" secondItem="mZD-gi-rLz" secondAttribute="centerX" id="xZc-C9-KKO"/>
-                            <constraint firstItem="a90-CW-xSA" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="zuC-sU-fcu"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="bg7-hq-xvn" secondAttribute="trailing" constant="-20" id="FF1-YM-dFe"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="bg7-hq-xvn" secondAttribute="bottom" id="OWl-kj-hBz"/>
+                            <constraint firstItem="bg7-hq-xvn" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="-20" id="diO-zw-Dl4"/>
+                            <constraint firstItem="bg7-hq-xvn" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-20" id="yKw-PS-xtE"/>
                         </constraints>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="373" y="1317"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="aHd-hp-Dd4">

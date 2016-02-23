@@ -109,5 +109,47 @@ class ViewController: UIViewController {
         )
         CGAlertController().showActionSheet(alertDetails, parentViewController: self)
     }
+    
+    @IBAction func complexColoredActionSheetNoTitleButtonPressed(sender: AnyObject) {
+        let alertDetails = CGAlertDetails(
+            title: "Sort By",
+            message: nil,
+            cancelAction: CGAction(title: "Cancel") {
+                print("cancel called")
+            },
+            destructiveAction: nil,
+            otherActions: [
+                CGAction(title: "Action") {
+                    print("Action called")
+                },
+                CGAction(title: "Action1") {
+                    print("Action1 called")
+                }
+            ]
+        )
+        CGAlertController().showActionSheet(alertDetails, parentViewController: self, buttonTextColor: UIColor.brownColor())
+    }
+    
+    @IBAction func complexColorediOS7ActionSheetNoTitleButtonPressed(sender: AnyObject) {
+        let alertDetails = CGAlertDetails(
+            title: "Sort By",
+            message: nil,
+            cancelAction: CGAction(title: "Cancel") {
+                print("cancel called")
+            },
+            destructiveAction: nil,
+            otherActions: [
+                CGAction(title: "Action") {
+                    print("Action called")
+                },
+                CGAction(title: "Action1") {
+                    print("Action1 called")
+                }
+            ]
+        )
+         let actionSheet = CGAlertController(alertControllerManager: CGLegacyAlertManager())
+        actionSheet.showActionSheet(alertDetails, parentViewController: self, buttonTextColor: UIColor.grayColor())
+    }
+
 
 }

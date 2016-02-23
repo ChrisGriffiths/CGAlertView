@@ -12,6 +12,7 @@ import UIKit
 public protocol CGAlertControllerProtocol {
     func showAlert(title: String, message: String, cancelAction: CGAction, parentViewController: UIViewController)
     func showActionSheet(title: String, cancelAction: CGAction, destructiveAction: CGAction, parentViewController: UIViewController)
+    func showActionSheet(title: String, cancelAction: CGAction, destructiveAction: CGAction, parentViewController: UIViewController, buttonTextColor: UIColor?)
     func showAlert(dialogDetails: CGAlertDetails, parentViewController: UIViewController)
     func showActionSheet(dialogDetails: CGAlertDetails, parentViewController: UIViewController, buttonTextColor: UIColor?)
     func showActionSheet(dialogDetails: CGAlertDetails, parentViewController: UIViewController)
@@ -30,7 +31,7 @@ extension CGAlertControllerProtocol {
         self.showAlert(alertDetails, parentViewController: parentViewController)
     }
     
-    public func showActionSheet(title: String, cancelAction: CGAction, destructiveAction: CGAction, parentViewController: UIViewController) {
+    public func showActionSheet(title: String, cancelAction: CGAction, destructiveAction: CGAction, parentViewController: UIViewController, buttonTextColor: UIColor?) {
         let actionSheetDetails = CGAlertDetails(
             title: title,
             message: nil,
@@ -38,8 +39,13 @@ extension CGAlertControllerProtocol {
             destructiveAction: destructiveAction,
             otherActions: nil
         )
-        self.showActionSheet(actionSheetDetails, parentViewController: parentViewController)
+        self.showActionSheet(actionSheetDetails, parentViewController: parentViewController, buttonTextColor: buttonTextColor)
     }
+
+    public func showActionSheet(title: String, cancelAction: CGAction, destructiveAction: CGAction, parentViewController: UIViewController) {
+        showActionSheet(title, cancelAction: cancelAction, destructiveAction: destructiveAction, parentViewController: parentViewController, buttonTextColor: nil)
+    }
+    
     public func showActionSheet(dialogDetails: CGAlertDetails, parentViewController: UIViewController) {
         showActionSheet(dialogDetails, parentViewController: parentViewController, buttonTextColor: nil)
     }

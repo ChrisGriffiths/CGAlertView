@@ -9,27 +9,53 @@
 import Foundation
 import UIKit
 
-public protocol CGAlertViewProtocol {
+public protocol CGAlertControllerProtocol {
     func showAlert(title: String, message: String, cancelAction: CGAction, parentViewController: UIViewController)
+    func showActionSheet(title: String, cancelAction: CGAction, destructiveAction: CGAction, parentViewController: UIViewController)
+    func showActionSheet(title: String, cancelAction: CGAction, destructiveAction: CGAction, parentViewController: UIViewController, buttonTextColor: UIColor?)
     func showAlert(dialogDetails: CGAlertDetails, parentViewController: UIViewController)
+    func showActionSheet(dialogDetails: CGAlertDetails, parentViewController: UIViewController, buttonTextColor: UIColor?)
+    func showActionSheet(dialogDetails: CGAlertDetails, parentViewController: UIViewController)
+
 }
 
-extension CGAlertViewProtocol {
+extension CGAlertControllerProtocol {
     public func showAlert(title: String, message: String, cancelAction: CGAction, parentViewController: UIViewController) {
         let alertDetails = CGAlertDetails(
             title: title,
             message: message,
             cancelAction: cancelAction,
+            destructiveAction: nil,
             otherActions: nil
         )
         self.showAlert(alertDetails, parentViewController: parentViewController)
     }
+    
+    public func showActionSheet(title: String, cancelAction: CGAction, destructiveAction: CGAction, parentViewController: UIViewController, buttonTextColor: UIColor?) {
+        let actionSheetDetails = CGAlertDetails(
+            title: title,
+            message: nil,
+            cancelAction: cancelAction,
+            destructiveAction: destructiveAction,
+            otherActions: nil
+        )
+        self.showActionSheet(actionSheetDetails, parentViewController: parentViewController, buttonTextColor: buttonTextColor)
+    }
+
+    public func showActionSheet(title: String, cancelAction: CGAction, destructiveAction: CGAction, parentViewController: UIViewController) {
+        showActionSheet(title, cancelAction: cancelAction, destructiveAction: destructiveAction, parentViewController: parentViewController, buttonTextColor: nil)
+    }
+    
+    public func showActionSheet(dialogDetails: CGAlertDetails, parentViewController: UIViewController) {
+        showActionSheet(dialogDetails, parentViewController: parentViewController, buttonTextColor: nil)
+    }
 }
 
 public struct CGAlertDetails {
-    public let title: String
-    public let message: String
+    public let title: String?
+    public let message: String?
     public let cancelAction: CGAction
+    public let destructiveAction: CGAction?
     public let otherActions: [CGAction]?
 }
 
@@ -58,43 +84,60 @@ public func ==(lhs: CGAction, rhs: CGAction) -> Bool {
     return lhs.title == rhs.title
 }
 
-public class CGAlertView: CGAlertViewProtocol {
-    //Used to keep reference alive while alertView showing. Otherwise actions fail
-    static internal var presentingAlertView: CGAlertView?
+public class CGAlertController: CGAlertControllerProtocol {
+    //Used to keep reference alive while CGAlertController showing. Otherwise actions fail
+    static internal var presentingAlertController: CGAlertController?
 
-    let alertViewManager: CGAlertViewManagerProtocol
+    let alertControllerManager: CGAlertControllerManagerProtocol
 
     public init() {
         if #available(iOS 8.0, *) {
-            self.alertViewManager = CGAlertControlManager()
+            self.alertControllerManager = CGAlertControlManager()
         } else {
-            self.alertViewManager = CGAlertViewManager()
+            self.alertControllerManager = CGLegacyAlertManager()
         }
     }
 
-    internal init(alertViewManager: CGAlertViewManagerProtocol) {
-        self.alertViewManager = alertViewManager
+    internal init(alertControllerManager: CGAlertControllerManagerProtocol) {
+        self.alertControllerManager = alertControllerManager
     }
 
     public func showAlert(dialogDetails: CGAlertDetails, parentViewController: UIViewController) {
-        CGAlertView.presentingAlertView = self
-        self.alertViewManager.showAlert(dialogDetails, parentViewController: parentViewController)
+        CGAlertController.presentingAlertController = self
+        self.alertControllerManager.showAlert(dialogDetails, parentViewController: parentViewController)
     }
+    
+    public func showActionSheet(dialogDetails: CGAlertDetails, parentViewController: UIViewController, buttonTextColor: UIColor?) {
+        CGAlertController.presentingAlertController = self
+        self.alertControllerManager.showActionSheet(dialogDetails, parentViewController: parentViewController, buttonTextColor: buttonTextColor)
+    }
+
 }
 
-protocol CGAlertViewManagerProtocol {
+protocol CGAlertControllerManagerProtocol {
     func showAlert(_: CGAlertDetails, parentViewController: UIViewController)
+    func showActionSheet(_: CGAlertDetails, parentViewController: UIViewController, buttonTextColor: UIColor?)
 }
 
-@objc public class CGAlertViewManager: NSObject, CGAlertViewManagerProtocol {
+@objc public class CGLegacyAlertManager: NSObject, CGAlertControllerManagerProtocol {
     internal private(set) var alertView: UIAlertView?
+    internal private(set) var actionSheet: UIActionSheet?
     public internal(set) var actions: Set<CGAction>?
+    var buttonTextColor: UIColor?
 
     public func showAlert(alertDetails: CGAlertDetails, parentViewController: UIViewController) {
         actions = createActions(alertDetails)
         alertView = createAlertView(alertDetails)
         alertView?.show()
     }
+    
+    public func showActionSheet(actionSheetDetails: CGAlertDetails, parentViewController: UIViewController, buttonTextColor: UIColor?) {
+        self.buttonTextColor = buttonTextColor
+        actions = createActions(actionSheetDetails)
+        actionSheet = createActionSheet(actionSheetDetails)
+        actionSheet?.showInView(parentViewController.view)
+    }
+
 
     func createAlertView(alertDetails: CGAlertDetails) -> UIAlertView {
         let alert = UIAlertView(
@@ -110,39 +153,84 @@ protocol CGAlertViewManagerProtocol {
         
         return alert
     }
+    
+    func createActionSheet(actionSheetDetails: CGAlertDetails) -> UIActionSheet {
+        let actionSheet = UIActionSheet(
+            title: actionSheetDetails.title,
+            delegate: self,
+            cancelButtonTitle: actionSheetDetails.cancelAction.title,
+            destructiveButtonTitle: actionSheetDetails.destructiveAction?.title
+        )
+        
+        actionSheetDetails.otherActions?.forEach { action in
+            actionSheet.addButtonWithTitle(action.title)
+        }
+        
+        return actionSheet
+    }
 
     func createActions(alertDetails: CGAlertDetails) -> Set<CGAction> {
-        var actions: [CGAction] = [
-            alertDetails.cancelAction
-        ]
+        var actions: [CGAction] = [ alertDetails.cancelAction ]
+        if let destructiveAction = alertDetails.destructiveAction {
+            actions.append(destructiveAction)
+        }
         alertDetails.otherActions?.forEach { actions.append($0) }
         return Set(actions)
     }
 }
 
-extension CGAlertViewManager: UIAlertViewDelegate {
+extension CGLegacyAlertManager: UIAlertViewDelegate, UIActionSheetDelegate {
     public func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {
-        guard let buttonTitle = alertView.buttonTitleAtIndex(buttonIndex),
-            let actions = self.actions else { return }
-        let buttonAction = actions.filter { $0.title == buttonTitle }
+        let buttonTitle = alertView.buttonTitleAtIndex(buttonIndex)
+        performActionWithButtonTitle(buttonTitle)
+    }
+    
+    public func actionSheet(actionSheet: UIActionSheet, clickedButtonAtIndex buttonIndex: Int) {
+        let buttonTitle = actionSheet.buttonTitleAtIndex(buttonIndex)
+        performActionWithButtonTitle(buttonTitle)
+    }
+    
+    func performActionWithButtonTitle(buttonTitle: String?) {
+        guard let actions = self.actions, let title = buttonTitle else { return }
+        let buttonAction = actions.filter { $0.title == title }
         buttonAction.first?.action?()
+    }
+    
+    public func willPresentActionSheet(actionSheet: UIActionSheet) {
+        guard let color = buttonTextColor else { return }
+        for button in actionSheet.subviews where button is UIButton {
+            (button as! UIButton).setTitleColor(color, forState: .Normal)
+        }
     }
 }
 
 @available(iOS 8.0, *)
-struct CGAlertControlManager: CGAlertViewManagerProtocol {
+struct CGAlertControlManager: CGAlertControllerManagerProtocol {
+    
     func showAlert(alertDetails: CGAlertDetails, parentViewController: UIViewController) {
-        let alertController = self.createAlertView(alertDetails)
+        let alertController = self.createAlertView(alertDetails, preferredStyle: .Alert)
+        parentViewController.presentViewController(alertController, animated: true, completion:  nil)
+    }
+    func showActionSheet(alertDetails: CGAlertDetails, parentViewController: UIViewController, buttonTextColor: UIColor?) {
+        let alertController = self.createAlertView(alertDetails, preferredStyle: .ActionSheet)
+        if let color = buttonTextColor {
+            alertController.view.tintColor = color
+        }
         parentViewController.presentViewController(alertController, animated: true, completion:  nil)
     }
 
-    func createAlertView(alertDetails: CGAlertDetails) -> UIAlertController {
+    func createAlertView(alertDetails: CGAlertDetails, preferredStyle: UIAlertControllerStyle) -> UIAlertController {
         let alert = UIAlertController(
             title: alertDetails.title,
             message: alertDetails.message,
-            preferredStyle: .Alert
+            preferredStyle: preferredStyle
         )
+        
         var actions = [ createButtonForAction(alertDetails.cancelAction, .Cancel) ]
+        if let destructiveAction = alertDetails.destructiveAction {
+            actions.append(createButtonForAction(destructiveAction, .Destructive))
+        }
+        
         alertDetails.otherActions?.forEach { actions.append(createButtonForAction($0, .Default)) }
         actions.forEach { alert.addAction($0) }
 

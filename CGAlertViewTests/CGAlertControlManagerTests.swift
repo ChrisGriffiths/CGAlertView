@@ -23,10 +23,16 @@ class CGAlertControlManagerTests: XCTestCase {
     }
 
     func test_createAlertView_returnsUIAlertView_withCorrectDetails() {
-        let alertView = sut.createAlertView(CGAlertDetails.sampleAlertDetails)
+        let alertView = sut.createAlertView(CGAlertDetails.sampleAlertDetails, preferredStyle: .Alert)
         XCTAssertEqual(alertView.title, "Title")
         XCTAssertEqual(alertView.message, "Message")
         XCTAssertEqual(alertView.actions.count, 3)
+    }
+    
+    func test_createAlertView_returnsUIActionSheet_withCorrectDetails() {
+        let alertView = sut.createAlertView(CGAlertDetails.sampleActionSheetDetails, preferredStyle: .Alert)
+        XCTAssertNil(alertView.title)
+        XCTAssertEqual(alertView.actions.count, 4)
     }
 
     func test_createOtherButton_withIndex_addActionsToAlertController() {

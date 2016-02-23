@@ -10,7 +10,7 @@ import UIKit
 
 class ViewController: UIViewController {
     @IBAction func simpleiOS7AlertButtonPressed(sender: AnyObject) {
-        let alertView = CGAlertView(alertViewManager: CGAlertViewManager())
+        let alertView = CGAlertController(alertControllerManager: CGLegacyAlertManager())
         alertView.showAlert("Title", message: "Message", cancelAction: CGAction(title: "Cancel") {
             print("cancel called")
             }, parentViewController: self)
@@ -20,7 +20,7 @@ class ViewController: UIViewController {
         let cancelAction = CGAction(title: "Cancel") {
             print("cancel called")
         }
-        CGAlertView().showAlert("Title", message: "Message", cancelAction: cancelAction, parentViewController: self)
+        CGAlertController().showAlert("Title", message: "Message", cancelAction: cancelAction, parentViewController: self)
     }
 
     @IBAction func complexAlertButtonPressed(sender: AnyObject) {
@@ -29,6 +29,52 @@ class ViewController: UIViewController {
             message: "Message",
             cancelAction: CGAction(title: "Cancel") {
                 print("cancel called")
+            },
+            destructiveAction: nil,
+            otherActions: [
+                CGAction(title: "Action") {
+                    print("Action called")
+                },
+                CGAction(title: "Action1") {
+                    print("Action1 called")
+                }
+            ]
+        )
+        CGAlertController().showAlert(alertDetails, parentViewController: self)
+    }
+    
+    
+    // Mark - Action Sheet
+    
+    
+    @IBAction func simpleiOS7ActionSheetButtonPressed(sender: AnyObject) {
+        let actionSheet = CGAlertController(alertControllerManager: CGLegacyAlertManager())
+        actionSheet.showActionSheet("Title", cancelAction: CGAction(title: "Cancel") {
+            print("cancel called")
+            }, destructiveAction: CGAction(title: "Destructive") {
+                print("destructive called")
+            }, parentViewController: self)
+    }
+    
+    @IBAction func simpleActionSheetButtonPressed(sender: AnyObject) {
+        let cancelAction = CGAction(title: "Cancel") {
+            print("cancel called")
+        }
+        let destructiveAction = CGAction(title: "Destructive") {
+            print("destructive called")
+        }
+        CGAlertController().showActionSheet("Title", cancelAction: cancelAction, destructiveAction: destructiveAction, parentViewController: self)
+    }
+    
+    @IBAction func complexActionSheetButtonPressed(sender: AnyObject) {
+        let alertDetails = CGAlertDetails(
+            title: "Title",
+            message: "Message",
+            cancelAction: CGAction(title: "Cancel") {
+                print("cancel called")
+            },
+            destructiveAction: CGAction(title: "Destructive") {
+                print("destructive called")
             },
             otherActions: [
                 CGAction(title: "Action") {
@@ -39,6 +85,29 @@ class ViewController: UIViewController {
                 }
             ]
         )
-        CGAlertView().showAlert(alertDetails, parentViewController: self)
+        CGAlertController().showActionSheet(alertDetails, parentViewController: self)
     }
+    
+    @IBAction func complexActionSheetNoTitleButtonPressed(sender: AnyObject) {
+        let alertDetails = CGAlertDetails(
+            title: nil,
+            message: nil,
+            cancelAction: CGAction(title: "Cancel") {
+                print("cancel called")
+            },
+            destructiveAction: CGAction(title: "Destructive") {
+                print("destructive called")
+            },
+            otherActions: [
+                CGAction(title: "Action") {
+                    print("Action called")
+                },
+                CGAction(title: "Action1") {
+                    print("Action1 called")
+                }
+            ]
+        )
+        CGAlertController().showActionSheet(alertDetails, parentViewController: self)
+    }
+
 }
